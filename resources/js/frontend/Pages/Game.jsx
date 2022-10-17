@@ -46,7 +46,7 @@ const Game = (props) => {
             setResult("WIN");
             openModal();
         } else {
-            const boardSize = Math.pow(game.size, 2);
+            const boardSize = Math.pow(game?.board_size, 2);
             if (pressCount === boardSize) {
                 setResult("DRAW");
                 openModal();
@@ -57,19 +57,22 @@ const Game = (props) => {
     useEffect(() => {
         if (result) {
             axios
-                .post("game/history", {
+                .post("games/history", {
                     game_id: game.id,
-                    winner: winner,
+                    winner: result === "DRAW" ? "" : winner,
                     looser:
-                        game?.first_player_name === winner
-                            ? winner
-                            : game?.second_player_name,
-                    status: result,
+                        result === "DRAW"
+                            ? ""
+                            : game?.first_player_name === winner
+                            ? game?.second_player_name
+                            : game?.first_player_name,
+                    status: result === "WIN" ? 1 : 0,
                     game_round: game.round.round,
                 })
                 .then((res) => console.log(res.data))
                 .catch((err) => console.log(err));
         }
+        console.log(result);
     }, [result]);
 
     const startGame = (roundNum = null) => {
@@ -149,11 +152,30 @@ const Game = (props) => {
                     <h3 className="text-danger">Score: </h3>
                     <h5>
                         {game?.first_player_name} Win:{" "}
-                        <span className="text-primary">0</span> time
+                        <span className="text-primary">
+                            {game?.first_player_win
+                                ? game?.first_player_win
+                                : 0}{" "}
+                            {game?.first_player_win > 1 ? "Times" : "Time"}
+                        </span>
                     </h5>
                     <h5>
                         {game?.second_player_name} Win:{" "}
-                        <span className="text-primary">0</span> times
+                        <span className="text-primary">
+                            {game?.second_player_win
+                                ? game?.second_player_win
+                                : 0}{" "}
+                            {game?.second_player_win > 1 ? "Times" : "Time"}
+                        </span>
+                    </h5>
+                    <h5>
+                        Tie:{" "}
+                        <span className="text-primary">
+                            {game?.total_draw
+                                ? game?.total_draw
+                                : 0}{" "}
+                            {game?.total_draw > 1 ? "Times" : "Time"}
+                        </span>
                     </h5>
                 </div>
                 <div className="col-md-5">
@@ -190,6 +212,7 @@ const Game = (props) => {
                                     <h5>You have won the game</h5>
                                 </>
                             )}
+
                             {result === "DRAW" && (
                                 <>
                                     <h4>The Game is</h4>

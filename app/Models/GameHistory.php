@@ -10,6 +10,14 @@ class GameHistory extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "game_id",
+        "winner",
+        "looser",
+        "status",
+        "game_round",
+    ];
+
     protected $cast = [
         "status" => GameStatus::class
     ];

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId("game_id")->constrained("games");
             $table->string("winner")->nullable();
             $table->string("looser")->nullable();
-            $table->smallIncrements("game_round")->nullable();
+            $table->smallInteger("game_round")->nullable();
             $table->tinyInteger("status")->nullable()->comment("WIN=1,LOSE=2,DRAW=0");
             $table->timestamps();
         });

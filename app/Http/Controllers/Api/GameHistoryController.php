@@ -46,12 +46,15 @@ class GameHistoryController extends Controller
      */
     public function store(GameHistoryRequest $request)
     {
-        return $this->history->store([
+        $history = $this->history->store([
             "game_id" => $request->get("game_id"),
             "winner" => $request->get("winner"),
             "looser" => $request->get("looser"),
-            "status" => GameStatus::from($request->get("status")),
+            "status" => $request->get("status"),
+            "game_round" => $request->get("game_round"),
         ]);
+
+        return response()->json(["data" => $history, "status" => "success"]);
     }
 
     /**

@@ -25,7 +25,8 @@ class GameHistoryRequest extends FormRequest
     {
         return [
             "game_id" => ["required"],
-            "winner" =>  ["required"],
+            "winner" =>  ["nullable", "string"],
+            "looser" =>  ["nullable", "string"],
             "status" =>  ["required"],
             "game_round" =>  ["required"],
         ];

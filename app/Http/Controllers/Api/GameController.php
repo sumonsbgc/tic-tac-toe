@@ -61,7 +61,7 @@ class GameController extends Controller
      */
     public function show($id)
     {
-        $this->game->setRelations("round");
+        $this->game->setRelations(["round", "history"]);
         $game = $this->game->findGameById($id);
         return new GameResource($game);
     }
