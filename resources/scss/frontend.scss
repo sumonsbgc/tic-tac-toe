@@ -1,0 +1,22 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+.welcome-wrapper {
+    margin-top: 200px;
+}
+
+.boards {
+    display: grid;
+    gap: 0;
+}
+.board {
+    grid-row: span 1;
+    grid-column: span 1;
+    font-size: 4.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ticked {
+    cursor: not-allowed;
+}
